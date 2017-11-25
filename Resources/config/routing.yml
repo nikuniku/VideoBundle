@@ -1,0 +1,27 @@
+video_homepage:
+    path:     /
+    defaults: { _controller: VideoBundle:Default:index }
+
+archived_events:
+    path:     /archivedevents/{page}
+    defaults: { _controller: VideoBundle:Default:archived , page: "p:1" }
+    requirements:
+        page: "p:\d+"
+
+video_allcategories:
+    path:     /%alias_video_allcategories_url_divisor%
+    defaults: { _controller: VideoBundle:Default:allcategories }
+
+video_sample:
+    path:     /{friendlyUrl}-{level}.{_format}
+    defaults: { _controller: VideoBundle:Default:sampleDetail }
+    requirements:
+        friendlyUrl: "sample"
+        level: \d+
+        _format:  html
+
+video_detail:
+    path:     /{friendlyUrl}.{_format}
+    defaults: { _controller: VideoBundle:Default:detail }
+    requirements:
+        _format:  html

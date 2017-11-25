@@ -1,0 +1,35 @@
+parameters:
+    video.search.configuration.class: ArcaSolutions\VideoBundle\Search\VideoConfiguration
+    video.blocks.twig.extension.class: ArcaSolutions\VideoBundle\Twig\Extension\BlocksExtension
+    video.synchronization.configuration.class: ArcaSolutions\VideoBundle\Services\Synchronization\VideoSynchronizable
+    video.category.synchronization.configuration.class: ArcaSolutions\VideoBundle\Services\Synchronization\VideoCategorySynchronizable
+    video.seo.twig.extension.class: ArcaSolutions\VideoBundle\Twig\Extension\SeoExtension
+services:
+    video.search:
+        class: %video.search.configuration.class%
+        arguments: ["@service_container"]
+        tags: [{ name: kernel.event_subscriber }]
+
+    video.synchronization:
+        class: %video.synchronization.configuration.class%
+        arguments: ["@service_container"]
+        tags: [{ name: kernel.event_subscriber }]
+
+    video.category.synchronization:
+        class: %video.category.synchronization.configuration.class%
+        arguments: ["@service_container"]
+        tags: [{ name: kernel.event_subscriber }]
+
+    video.blocks:
+        class: %video.blocks.twig.extension.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
+
+    seo.video:
+        class: %video.seo.twig.extension.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
